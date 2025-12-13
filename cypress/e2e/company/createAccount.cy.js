@@ -126,3 +126,120 @@ describe('Success Scenarios', () => {
   });
 
 });
+
+
+
+// -------------------------------------------------------------------------------------------------------------------- 
+// ERROR VALIDATION 
+// Checking if the system responds to invalid or incomplete user inputs
+
+describe('Error Validation', () => {
+
+  // Visiting the signup page before each test
+  beforeEach(() => {
+
+    cy.visit('/signup'); 
+    cy.contains(/Sign up for my company/i).click();
+
+  });
+
+  // Scenario where the user enters an empty field
+  it('register with all fields empty', () => {
+
+    // Submiting the empty form by selecting "Create Account"
+    cy.contains('button', /Create Company & Account/i).click();
+
+    // Verifying each error message are present
+    cy.contains(/Company code is required/i).should('be.visible');
+    cy.contains(/Company phone is required/i).should('be.visible');
+    cy.contains(/Company name is required/i).should('be.visible');
+    cy.contains(/Company email is required/i).should('be.visible');
+    cy.contains(/Company website is required/i).should('be.visible');
+    cy.contains(/First name is required/i).should('be.visible');
+    cy.contains(/Last name is required/i).should('be.visible');
+    cy.contains(/Email is required/i).should('be.visible');
+    cy.contains(/Username is required/i).should('be.visible');
+    cy.contains(/Password is required/i).should('be.visible');
+    cy.contains(/Please confirm your password/i).should('be.visible');
+
+  });
+
+  it('invalid company email', () => {
+
+    // Filling out company email field
+    cy.get('input[id="company_email"]').type('a');
+
+    // Trigger error by selecting the company website field or anywhere else
+    cy.get('input[id="company_website"]').click();
+
+    // Verifying each error message are present
+    cy.contains(/Invalid email address/i).should('be.visible');
+
+  });
+
+  it('invalid company website', () => {
+
+    // Filling out company website field
+    cy.get('input[id="company_website"]').type('a');
+
+    // Trigger error by selecting the first name field or anywhere else
+    cy.get('input[id="admin_firstName"]').click();
+
+    // Verifying each error message are present
+    cy.contains(/Invalid website URL/i).should('be.visible');
+
+  });
+
+  it('invalid admin email', () => {
+
+    // Filling out admin email field
+    cy.get('input[id="admin_email"]').type('a');
+
+    // Trigger error by selecting the username field or anywhere else
+    cy.get('input[id="admin_username"]').click();
+
+    // Verifying each error message are present
+    cy.contains(/Invalid email address/i).should('be.visible');
+
+  });
+
+  it('username with less characters', () => {    
+
+    // Filling out admin username field
+    cy.get('input[id="admin_username"]').type('a');
+
+    // Trigger error by selecting the password field or anywhere else
+    cy.get('input[id="admin_password"]').click();
+    
+    // Verifying each error message are present
+    cy.contains(/Username must be at least 3 characters/i).should('be.visible');
+
+  });
+
+  it('password with less characters', () => {
+
+    // Filling out admin password field
+    cy.get('input[id="admin_password"]').type('a');
+
+    // Trigger error by selecting the cofirm password or anywhere else
+    cy.get('input[id="confirmPassword"]').click();
+
+    // Verifying each error message are present
+    cy.contains(/Password must be at least 8 characters/i).should('be.visible');
+
+  });
+
+  it('password must match', () => {
+
+    // Filling out confirm password field
+    cy.get('input[id="confirmPassword"]').type('ab');
+
+    // Trigger error by selecting the admin password or anywhere else
+    cy.get('input[id="admin_password"]').click();
+
+    // Verifying each error message are present
+    cy.contains(/Passwords must match/i).should('be.visible');
+
+  });
+
+});
