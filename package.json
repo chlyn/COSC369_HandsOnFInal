@@ -1,0 +1,15 @@
+{
+  "name": "cosc369_handsonfinal",
+  "version": "1.0.0",
+  "description": "An end-to-end testing assignment for [GrabDocs](https://grabdocs.com/), built with Cypress and Playwright to test complete user workflows",
+  "main": "cypress.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^15.7.1"
+  }
+}
