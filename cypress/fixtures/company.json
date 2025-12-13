@@ -1,7 +1,7 @@
 {
-    "companyCode": "default-company-code-2024",
-    "companyPhone": "562347890",
-    "companyName": "Tester Grab Docs",
-    "companyEmail": "grabdocstester@gmail.com",
-    "companyWebsite": "https://grabdocstester.com"
+    "code": "default-company-code-2024",
+    "phone": "5623478900",
+    "name": "Tester Grab Docs",
+    "email": "grabdocstester@gmail.com",
+    "website": "https://grabdocstester.com"
 }

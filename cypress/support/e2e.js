@@ -4,26 +4,24 @@ import "./commands";
 // Delaying tests by 700 milliseconds
 const COMMAND_DELAY = 700;
 
-// Listing specific commands to delay
-const slowCommands = [
+// Listing specific action commands to delay
+const actionCommands = [
     "visit",
-    "get",
-    "contains",
     "click",
     "type",
     "clear",
     "select",
     "check",
-    "uncheck"
+    "uncheck",
 ];
 
-// Looping through each command to delay
-slowCommands.forEach((command) => {
+// Looping through each action command to delay
+actionCommands.forEach((command) => {
 
-    // Overwriting the original Cypress commands when called
+    // Overwriting the original Cypress action commands when called
     Cypress.Commands.overwrite(command, (originalFn, ...args) => {
 
-        // Performing the real command action regularly 
+        // Performing the original action command regularly 
         const result = originalFn(...args);
 
         // Waiting 700 milliseconds after the action is performed to run next command
