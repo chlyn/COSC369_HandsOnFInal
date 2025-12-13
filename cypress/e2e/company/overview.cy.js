@@ -13,7 +13,7 @@ describe('UI Verification', () => {
 
   });
 
-  it('displays overview infornation', () => {
+  it('displays overview information', () => {
 
     // Verifying header is present
     cy.contains(/Company Overview/i).should('be.visible');
