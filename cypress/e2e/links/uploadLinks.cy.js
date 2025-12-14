@@ -61,8 +61,10 @@ describe('Success Scenarios', () => {
     // Verifying create link form is present
     cy.contains(/Create Upload Link/i).should('be.visible');
 
-    // Filling out create link form and submitting by clicking "Create Link" button 
+    // Filling out link name field
     cy.get('input[placeholder="Enter link name"]').type('Testing Link');
+
+    // Submitting create link form by clicking "Create Link" button 
     cy.contains('button', /Create Link/i).click();
 
     // Verifying that the backend receives and responds correctly
@@ -112,7 +114,7 @@ describe('Success Scenarios', () => {
     cy.contains('button', /Share/i).click();
 
     // Verifying share link form is present
-    cy.contains(/Share Upload Link/i).should('be.visible');
+    cy.contains(/Share Upload Link/i).should('be.visible').highlight();
 
     // Filling out email field
     cy.getUser('user_2').then((user) => {
@@ -145,6 +147,59 @@ describe('Success Scenarios', () => {
 
     // Verifying that success message is present in the UI
     cy.contains(/Sending email to 1 recipient/i).should('be.visible').highlight();
+
+  });
+
+  // Scenario where user edits a link
+  it('edit link', () => {
+
+    // Monitoring the backend API request and response
+    cy.intercept('PUT', '**api/v1/web/upload-links/**').as('editLink');
+
+    // Going to more actions 
+    cy.contains('td', 'Testing Link')
+      .parent('tr')
+      .find('button[aria-label="Options"]')
+      .click();
+
+    // Sharing link by clicking "Edit"
+    cy.contains('button', /Edit/i).click();
+
+    // Verifying edit link form is present
+    cy.contains(/Edit Upload Link/i).should('be.visible').highlight();
+
+    // Filling out link name field
+    cy.get('input[placeholder="Enter link name"]').clear().type('Test Edit');
+
+    // Submitting edit link form by clicking "Update Link"
+    cy.contains('button', /Update Link/i).click();
+
+    // Verifying that the backend receives and responds correctly
+    cy.wait('@editLink').then(({request, response}) => {
+
+      // Verifying the correct API endpoint and HTTP method was used for the request
+      expect(request.url).to.include('/api/v1/web/upload-links/');
+      expect(request.method).to.eq('PUT');
+      expect(request.body).to.include({
+        link_name: 'Test Edit'
+      });
+
+      // Verifying that the backend responded successfully
+      expect(response.statusCode).to.eq(200);
+      expect(response.body).to.include.keys("success", "upload_link");
+      expect(response.body.upload_link.link_name).to.eq('Test Edit');
+      expect(response.body).to.include({
+        success: true
+      });
+
+
+    });
+
+    // Verifying that success message is present in the UI
+    cy.contains(/Upload link updated successfully/i).should('be.visible').highlight();
+
+    // Verifying that the link name is updated in the UI
+    cy.contains(/Test Edit/i).should('be.visible').highlight();
 
   });
 
