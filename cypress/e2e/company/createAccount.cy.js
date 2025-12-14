@@ -164,6 +164,7 @@ describe('Error Validation', () => {
 
   });
 
+  // Scenario where the user enters an invalid company email without an '@'
   it('invalid company email', () => {
 
     // Filling out company email field
@@ -177,6 +178,7 @@ describe('Error Validation', () => {
 
   });
 
+  // Scenario where the user enters an invalid website without an 'https://' or '.com'
   it('invalid company website', () => {
 
     // Filling out company website field
@@ -190,6 +192,7 @@ describe('Error Validation', () => {
 
   });
 
+  // Scenario where the user enters an invalid admin email without an '@'
   it('invalid admin email', () => {
 
     // Filling out admin email field
@@ -203,6 +206,7 @@ describe('Error Validation', () => {
 
   });
 
+  // Scenario where the user enters a username with less than 3 characters
   it('username with less characters', () => {    
 
     // Filling out admin username field
@@ -216,6 +220,7 @@ describe('Error Validation', () => {
 
   });
 
+  // Scenario where the user enters a password with less than 8 characters
   it('password with less characters', () => {
 
     // Filling out admin password field
@@ -229,6 +234,7 @@ describe('Error Validation', () => {
 
   });
 
+  // Scenario where the user enters a confirm password that doesnt match the password
   it('password must match', () => {
 
     // Filling out confirm password field

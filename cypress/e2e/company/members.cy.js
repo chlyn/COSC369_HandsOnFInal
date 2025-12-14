@@ -95,3 +95,51 @@ describe('Success Scenarios', () => {
   });
 
 });
+
+
+
+// -------------------------------------------------------------------------------------------------------------------- 
+// ERROR VALIDATION 
+// Checking if the system responds to an already invited member
+
+describe('Error Validation', () => {
+
+  // Logging in user before each test
+  beforeEach(() => {
+
+    cy.login();
+    cy.contains('button', /Members/i).click();
+
+  });
+
+  // Scenario where an existing member is invited again
+  it('invite existing member', () => {
+
+    // Filling out email field
+    cy.fixture('user').then((user) => {
+      cy.get('input[type="email"]').type(user.email);
+    });
+
+    // Trigger error by selecting "Invite" button
+    cy.contains('button', /^Invite$/i).click();
+
+    // Verifying each error message are present
+    cy.contains(/User is already in this company/i).should('be.visible');
+
+  });
+
+  // Scenario where a user that has been invited is invited again
+  it('invite pending user', () => {
+
+    // Filling out email field
+    cy.get('input[type="email"]').type('testinggrabdocs@gmail.com');
+
+    // Trigger error by selecting "Invite" button
+    cy.contains('button', /^Invite$/i).click();
+
+    // Verifying each error message are present
+    cy.contains(/An invitation is already pending for this email/i).should('be.visible');
+
+  });
+
+});
