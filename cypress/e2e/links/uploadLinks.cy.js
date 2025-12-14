@@ -162,7 +162,7 @@ describe('Success Scenarios', () => {
       .find('button[aria-label="Options"]')
       .click();
 
-    // Sharing link by clicking "Edit"
+    // Editing link by clicking "Edit"
     cy.contains('button', /Edit/i).click();
 
     // Verifying edit link form is present
@@ -200,6 +200,55 @@ describe('Success Scenarios', () => {
 
     // Verifying that the link name is updated in the UI
     cy.contains(/Test Edit/i).should('be.visible').highlight();
+
+  });
+
+  // Scenario where user disables a link
+  it('disable link', () => {
+
+    // Monitoring the backend API request and response
+    cy.intercept('PUT', '**api/v1/web/upload-links/**').as('disableLink');
+
+    // Going to more actions 
+    cy.contains('td', 'Test Edit')
+      .parent('tr')
+      .find('button[aria-label="Options"]')
+      .click();
+
+    // Disabling link by clicking "Disable"
+    cy.contains('button', /Disable/i).click();
+
+    // Verifying that the backend receives and responds correctly
+    cy.wait('@disableLink').then(({request, response}) => {
+
+      // Verifying the correct API endpoint and HTTP method was used for the request
+      expect(request.url).to.include('/api/v1/web/upload-links/');
+      expect(request.method).to.eq('PUT');
+      expect(request.body).to.include({
+        is_active: false
+      });
+
+      // Verifying that the backend responded successfully
+      expect(response.statusCode).to.eq(200);
+      expect(response.body).to.include.keys("success", "upload_link");
+      expect(response.body.upload_link.is_active).to.eq(false);
+      expect(response.body).to.include({
+        success: true
+      });
+
+
+    });
+
+    // Verifying that success message is present in the UI
+    cy.contains(/Link disabled successfully/i).should('be.visible').highlight();
+
+    // Verifying that the status for "Test Edit" is updated in the UI
+    cy.contains('td', 'Test Edit')
+      .parents('tr')
+      .within(() => {
+        cy.contains('Inactive').should('be.visible')
+      .highlight()
+    });
 
   });
 
