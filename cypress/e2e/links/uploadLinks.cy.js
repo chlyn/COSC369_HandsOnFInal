@@ -252,4 +252,41 @@ describe('Success Scenarios', () => {
 
   });
 
+  // Scenario where user delets a link
+  it('delete link', () => {
+
+    // Monitoring the backend API request and response
+    cy.intercept('DELETE', '**api/v1/web/upload-links/**').as('deleteLink');
+
+    // Going to more actions 
+    cy.contains('td', 'Test Edit')
+      .parent('tr')
+      .find('button[aria-label="Options"]')
+      .click();
+
+    // Deleting link by clicking "Delete"
+    cy.contains('button', /Delete/i).click();
+
+    // Verifying that the backend receives and responds correctly
+    cy.wait('@deleteLink').then(({request, response}) => {
+
+      // Verifying the correct API endpoint and HTTP method was used for the request
+      expect(request.url).to.include('/api/v1/web/upload-links/');
+      expect(request.method).to.eq('DELETE');
+
+      // Verifying that the backend responded successfully
+      expect(response.statusCode).to.eq(200);
+      expect(response.body).to.include({
+        message: 'Upload link deleted successfully',
+        success: true
+      });
+
+
+    });
+
+    // Verifying that success message is present in the UI
+    cy.contains(/Upload link deleted successfully/i).should('be.visible');
+
+  });
+
 });
