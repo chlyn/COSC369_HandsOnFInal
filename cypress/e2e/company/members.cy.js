@@ -70,7 +70,7 @@ describe('Success Scenarios', () => {
     // Verifying that the backend receives and responds correctly
     cy.wait('@inviteMembers').then(({request, response}) => {
 
-      // Verifying the correct API endpoint, HTTP method, email, and username was used for the request
+      // Verifying the correct API endpoint, HTTP method, email, and role was used for the request
       expect(request.url).to.include('/api/v1/company/3/invite');
       expect(request.method).to.eq('POST');
       expect(request.body).to.include({
