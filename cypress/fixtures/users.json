@@ -1,0 +1,21 @@
+{
+  "user_1": {
+    "username": "grabdocstesters",
+    "email": "grabdocstester@gmail.com",
+    "password": "Testing_123",
+    "otpBypass": "335577",
+    "firstName": "Tester",
+    "lastName": "GrabDocs",
+    "initials": "TG"
+  },
+  
+  "user_2": {
+    "username": "tester",
+    "email": "testinggrabdocs@gmail.com",
+    "password": "Testing123",
+    "otpBypass": "335577",
+    "firstName": "Tester",
+    "lastName": "Account",
+    "initials": "TA"
+  }
+}
