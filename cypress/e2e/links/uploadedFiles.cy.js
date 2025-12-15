@@ -154,6 +154,46 @@ describe('Success Scenarios', () => {
 
   });
 
+  // Scenario where the user deletes the file
+  it('delete file', () => {
+
+    // Logging in with valid credentials
+    loginToLinks();
+
+    // Monitoring the backend API request and response
+    cy.intercept('DELETE', '**api/v1/web/files/*?confirmed=true').as('deleteFile');
+
+    // Deleting file by clicking "Delete File"
+    cy.contains('tr', 'list-test.pdf')
+      .within(() => {
+        cy.get('button[title="Delete file"]').click();
+      });
+
+    // Verifying that the backend receives and responds correctly
+    cy.wait('@deleteFile').then(({request, response}) => {
+
+      // Verifying the correct API endpoint and HTTP method was used for the request
+      expect(request.url).to.include('/api/v1/web/files');
+      expect(request.method).to.eq('DELETE');
+
+      // Verifying that the backend responded successfully
+      expect(response.statusCode).to.eq(200);
+      expect(response.body).to.include.keys("deleted_file_info", "deletion_summary", "message", "success");
+      expect(response.body).to.include({
+        message: "⚠️ File 'list-test.pdf' has been PERMANENTLY deleted. This action is IRREVERSIBLE and cannot be undone.",
+        success: true
+      });
+
+      // Verifying that the correct was deleted in the backend
+      expect(response.body.deleted_file_info.original_filename).to.eq('list-test.pdf');
+
+    });
+  
+    // Verifying that success message is present in the UI
+    cy.contains(/File deleted successfully/i).should('be.visible').highlight();
+
+  });
+
 });
 
 
