@@ -33,3 +33,5 @@ yarn-error.log*
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+auth.json
+playwright/auth.json
