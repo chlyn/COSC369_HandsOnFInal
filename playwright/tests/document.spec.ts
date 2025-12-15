@@ -64,3 +64,27 @@ async function uploadFile(page: Page, filePath: string) {
     throw new Error(`Upload did not appear for: ${visibleName}`);
   }
 }
+
+test("upload three files", async ({ page }) => {
+  // Navigate to upload page
+  await page.goto("https://app.grabdocs.com/upload");
+  await page.waitForLoadState("load");
+  await page.waitForTimeout(1000);
+
+  const fixturesDir = path.join(__dirname, "fixtures");
+
+  // Create three files to test upload
+  const files = [
+    makeFile(fixturesDir, "multi1"),
+    makeFile(fixturesDir, "multi2"),
+    makeFile(fixturesDir, "multi3"),
+  ];
+
+  // Upload each file sequentially
+  for (const filePath of files) {
+    await uploadFile(page, filePath);
+    await page.waitForTimeout(1000);
+  }
+
+  console.log("✓ All three files uploaded successfully");
+});
