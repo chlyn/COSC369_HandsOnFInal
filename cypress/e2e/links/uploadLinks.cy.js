@@ -35,7 +35,7 @@ describe('UI Verification', () => {
 
 // -------------------------------------------------------------------------------------------------------------------- 
 // SUCCESS SCENARIOS 
-// Verifying that users can create a new link
+// Verifying that users can create, share, edit, disable, and delete a link
 
 describe('Success Scenarios', () => {
 

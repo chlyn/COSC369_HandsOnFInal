@@ -32,7 +32,7 @@ afterEach(() => {
 // Delay in between action commands
 
 // DHow long the delay should be
-const COMMAND_DELAY = 800;
+const COMMAND_DELAY = 900;
 
 // Listing specific action commands to delay
 const actionCommands = [

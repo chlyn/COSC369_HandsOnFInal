@@ -71,8 +71,7 @@ describe('Success Scenarios', () => {
       });
 
       // Verifying that the invitation is listed properly in the backend
-      const invitation = response.body.invitations;
-      expect(invitation[0].email).to.eq(email);
+      expect(response.body.invitations[0].email).to.eq(email);
 
     });
 
