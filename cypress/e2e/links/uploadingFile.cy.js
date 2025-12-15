@@ -9,7 +9,7 @@ describe('UI Verification', () => {
   // Visiting upload page before each test
   beforeEach(() => {
 
-    cy.visit('/upload-to/toQTa4EKmhSbTlj-AmFyTu-sXmhKZCY2aHSmfhreQ98');
+    cy.visit('/upload-to/YjY7tDyxv-5_vCKfXVEj7MmsGy3WXnMscUikE5OH_R8');
   
   });
 
@@ -41,7 +41,7 @@ describe('Success Scenarios', () => {
   // Visiting upload page before each test
   beforeEach(() => {
 
-    cy.visit('/upload-to/toQTa4EKmhSbTlj-AmFyTu-sXmhKZCY2aHSmfhreQ98');
+    cy.visit('/upload-to/YjY7tDyxv-5_vCKfXVEj7MmsGy3WXnMscUikE5OH_R8');
   
   });
 
@@ -50,9 +50,9 @@ describe('Success Scenarios', () => {
     // Monitoring the backend API request and response
     cy.intercept('POST', '**api/v1/web/upload-to/**').as('uploadFile');
 
-    // Uploading file from fixture folder
+    // Uploading file from fixture assets folder
     cy.contains(/Drop files here or click to browse/i).click();
-    cy.get('input#file-upload').selectFile('cypress/fixtures/asset-upload-test.pdf', {force: true});
+    cy.get('input#file-upload').selectFile('cypress/fixtures/assets/upload-test.pdf', {force: true});
 
     // Filling in name field
     cy.getUser('user_2').then((user) => {
@@ -66,7 +66,7 @@ describe('Success Scenarios', () => {
     cy.wait('@uploadFile').then(({request, response}) => {
 
       // Verifying the correct API endpoint and HTTP method was used for the request
-      expect(request.url).to.include('/api/v1/web/upload-to/toQTa4EKmhSbTlj-AmFyTu-sXmhKZCY2aHSmfhreQ98');
+      expect(request.url).to.include('/api/v1/web/upload-to/YjY7tDyxv-5_vCKfXVEj7MmsGy3WXnMscUikE5OH_R8');
       expect(request.method).to.eq('POST');
 
       // Verifying that the backend responded successfully
@@ -80,7 +80,7 @@ describe('Success Scenarios', () => {
       // Verifying that the correct file is uploaded backend
       const uploadedFile = response.body.uploaded_files[0];
       expect(uploadedFile).to.include({
-        filename: 'asset-upload-test.pdf',
+        filename: 'upload-test.pdf',
         type: 'application/pdf'
       });
 
