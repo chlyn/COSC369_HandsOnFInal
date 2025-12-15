@@ -133,7 +133,7 @@ describe('Success Scenarios', () => {
 
       // Verifying that the invitation is listed properly in the backend
       cy.getUser('user_2').then((user) => {
-        expect(request.body.recipient_emails[0]).to.eq(user.email);;
+        expect(request.body.recipient_emails[0]).to.eq(user.email);
       });
 
       // Verifying that the backend responded successfully
