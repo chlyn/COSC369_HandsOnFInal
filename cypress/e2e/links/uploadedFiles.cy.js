@@ -101,6 +101,40 @@ describe('Success Scenarios', () => {
 
   });
 
+  // Scenario where user views the file
+  it('view file', () => {
+
+    // Logging in with valid credentials
+    loginToLinks();
+
+    // Monitoring the backend API request and response
+    cy.intercept('GET', '**api/v1/web/files/*/content').as('viewFile');
+
+    // Viewing file by clicking "View File"
+    cy.contains('tr', 'list-test.pdf')
+      .within(() => {
+        cy.get('button[title="View file"]').click();
+      });
+
+    // ERROR 
+    // You cannot view the file, it always says "Error loading file"
+    // Verifying that the backend receives and responds correctly
+    cy.wait('@uploadFile').then(({request, response}) => {
+
+      // Verifying the correct API endpoint and HTTP method was used for the request
+      expect(request.url).to.include('/api/v1/web/files');
+      expect(request.method).to.eq('GET');
+
+      // Verifying that the backend responded successfully
+      expect(response.statusCode).to.eq(200);
+      expect(response.body).to.include({
+        success: true
+      });
+
+    });
+  
+  });
+
 });
 
 
