@@ -135,6 +135,25 @@ describe('Success Scenarios', () => {
   
   });
 
+  // Scenario where user downloads the file
+  it('download file', () => {
+
+    // Logging in with valid credentials
+    loginToLinks();
+
+    // Downloading file by clicking "Download File"
+    cy.contains('tr', 'list-test.pdf')
+      .within(() => {
+        cy.get('button[title="Download file"]').click();
+      });
+
+    // ERROR
+    // You cannot download a file, it always redirects you to a random page
+    // Verifying that success message is present in the UI
+    cy.contains(/File download started/i).should('be.visible').highlight();
+
+  });
+
 });
 
 
