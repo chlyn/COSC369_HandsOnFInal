@@ -19,29 +19,30 @@ describe('UI Verification', () => {
 
   });
 
+  // Verifying that all page elements are rendered into the page
   it('displays the create company form', () => {
 
     // Verifying each input fields are present for company section
-    cy.get('input[id="company_code"]').should('be.visible');
-    cy.get('input[id="company_phone"]').should('be.visible');
-    cy.get('input[id="company_name"]').should('be.visible');
-    cy.get('input[id="company_email"]').should('be.visible');
-    cy.get('input[id="company_website"]').should('be.visible');
+    cy.get('input[id="company_code"]').should('be.visible').highlight();
+    cy.get('input[id="company_phone"]').should('be.visible').highlight();
+    cy.get('input[id="company_name"]').should('be.visible').highlight();
+    cy.get('input[id="company_email"]').should('be.visible').highlight();
+    cy.get('input[id="company_website"]').should('be.visible').highlight();
 
     // Verifying each input fields are present for admin section
-    cy.get('input[id="admin_firstName"]').should('be.visible');
-    cy.get('input[id="admin_lastName"]').should('be.visible');
-    cy.get('input[id="admin_email"]').should('be.visible');
-    cy.get('input[id="admin_username"]').should('be.visible');
-    cy.get('input[id="admin_password"]').should('be.visible');
-    cy.get('input[id="confirmPassword"]').should('be.visible');
+    cy.get('input[id="admin_firstName"]').should('be.visible').highlight();
+    cy.get('input[id="admin_lastName"]').should('be.visible').highlight();
+    cy.get('input[id="admin_email"]').should('be.visible').highlight();
+    cy.get('input[id="admin_username"]').should('be.visible').highlight();
+    cy.get('input[id="admin_password"]').should('be.visible').highlight();
+    cy.get('input[id="confirmPassword"]').should('be.visible').highlight();
 
     // Verifying submiy button is present
-    cy.contains('button', /Create Company & Account/i).should('be.visible');
+    cy.contains('button', /Create Company & Account/i).should('be.visible').highlight();
 
     // Verifying other links related to account signin are present
-    cy.contains(/Sign in/i).should('be.visible');
-    cy.contains(/Sign up for free/i).should('be.visible');
+    cy.contains(/Sign in/i).should('be.visible').highlight();
+    cy.contains(/Sign up for free/i).should('be.visible').highlight();
 
   });
 
@@ -116,12 +117,12 @@ describe('Success Scenarios', () => {
     });
 
     // Verifying that success message is present in the UI
-    cy.contains(/Company and admin account created successfully!/i).should('be.visible');
+    cy.contains(/Company and admin account created successfully!/i).should('be.visible').highlight();
 
     // Verifying that user is takin to the company dashboard
     cy.url().should("include", "/company?welcome=true");
-    cy.contains(company_name).should('be.visible');
-    cy.contains(/Company Dashboard/i).should('be.visible');
+    cy.contains(company_name).should('be.visible').highlight();
+    cy.contains(/Company Dashboard/i).should('be.visible').highlight();
 
   });
 
@@ -150,17 +151,17 @@ describe('Error Validation', () => {
     cy.contains('button', /Create Company & Account/i).click();
 
     // Verifying each error message are present
-    cy.contains(/Company code is required/i).should('be.visible');
-    cy.contains(/Company phone is required/i).should('be.visible');
-    cy.contains(/Company name is required/i).should('be.visible');
-    cy.contains(/Company email is required/i).should('be.visible');
-    cy.contains(/Company website is required/i).should('be.visible');
-    cy.contains(/First name is required/i).should('be.visible');
-    cy.contains(/Last name is required/i).should('be.visible');
-    cy.contains(/Email is required/i).should('be.visible');
-    cy.contains(/Username is required/i).should('be.visible');
-    cy.contains(/Password is required/i).should('be.visible');
-    cy.contains(/Please confirm your password/i).should('be.visible');
+    cy.contains(/Company code is required/i).should('be.visible').highlight();
+    cy.contains(/Company phone is required/i).should('be.visible').highlight();
+    cy.contains(/Company name is required/i).should('be.visible').highlight();
+    cy.contains(/Company email is required/i).should('be.visible').highlight();
+    cy.contains(/Company website is required/i).should('be.visible').highlight();
+    cy.contains(/First name is required/i).should('be.visible').highlight();
+    cy.contains(/Last name is required/i).should('be.visible').highlight();
+    cy.contains(/^Email is required$/i).should('be.visible').highlight();
+    cy.contains(/Username is required/i).should('be.visible').highlight();
+    cy.contains(/Password is required/i).should('be.visible').highlight();
+    cy.contains(/Please confirm your password/i).should('be.visible').highlight();
 
   });
 
@@ -168,13 +169,13 @@ describe('Error Validation', () => {
   it('invalid company email', () => {
 
     // Filling out company email field
-    cy.get('input[id="company_email"]').type('a');
+    cy.get('input[id="company_email"]').type('company email');
 
     // Trigger error by selecting the company website field or anywhere else
     cy.get('input[id="company_website"]').click();
 
     // Verifying each error message are present
-    cy.contains(/Invalid email address/i).should('be.visible');
+    cy.contains(/Invalid email address/i).should('be.visible').highlight();
 
   });
 
@@ -182,13 +183,13 @@ describe('Error Validation', () => {
   it('invalid company website', () => {
 
     // Filling out company website field
-    cy.get('input[id="company_website"]').type('a');
+    cy.get('input[id="company_website"]').type('company website');
 
     // Trigger error by selecting the first name field or anywhere else
     cy.get('input[id="admin_firstName"]').click();
 
     // Verifying each error message are present
-    cy.contains(/Invalid website URL/i).should('be.visible');
+    cy.contains(/Invalid website URL/i).should('be.visible').highlight();
 
   });
 
@@ -196,13 +197,13 @@ describe('Error Validation', () => {
   it('invalid admin email', () => {
 
     // Filling out admin email field
-    cy.get('input[id="admin_email"]').type('a');
+    cy.get('input[id="admin_email"]').type('admin email');
 
     // Trigger error by selecting the username field or anywhere else
     cy.get('input[id="admin_username"]').click();
 
     // Verifying each error message are present
-    cy.contains(/Invalid email address/i).should('be.visible');
+    cy.contains(/Invalid email address/i).should('be.visible').highlight();
 
   });
 
@@ -216,7 +217,7 @@ describe('Error Validation', () => {
     cy.get('input[id="admin_password"]').click();
     
     // Verifying each error message are present
-    cy.contains(/Username must be at least 3 characters/i).should('be.visible');
+    cy.contains(/Username must be at least 3 characters/i).should('be.visible').highlight();
 
   });
 
@@ -224,13 +225,13 @@ describe('Error Validation', () => {
   it('password with less characters', () => {
 
     // Filling out admin password field
-    cy.get('input[id="admin_password"]').type('a');
+    cy.get('input[id="admin_password"]').type('pass');
 
     // Trigger error by selecting the cofirm password or anywhere else
     cy.get('input[id="confirmPassword"]').click();
 
     // Verifying each error message are present
-    cy.contains(/Password must be at least 8 characters/i).should('be.visible');
+    cy.contains(/Password must be at least 8 characters/i).should('be.visible').highlight();
 
   });
 
@@ -238,13 +239,13 @@ describe('Error Validation', () => {
   it('password must match', () => {
 
     // Filling out confirm password field
-    cy.get('input[id="confirmPassword"]').type('ab');
+    cy.get('input[id="confirmPassword"]').type('confirm password');
 
     // Trigger error by selecting the admin password or anywhere else
     cy.get('input[id="admin_password"]').click();
 
     // Verifying each error message are present
-    cy.contains(/Passwords must match/i).should('be.visible');
+    cy.contains(/Passwords must match/i).should('be.visible').highlight();
 
   });
 
