@@ -133,3 +133,27 @@ test("create and delete calendar event", async ({ page }) => {
 
   console.log(`✓ Event deleted successfully: ${eventName}`);
 });
+
+// Test 3: Calendar next month navigation
+test("calendar next button changes month", async ({ page }) => {
+  await page.goto(CALENDAR_URL);
+  await expect(page.getByText("My Calendar")).toBeVisible({ timeout: 6000 });
+
+  await page.waitForTimeout(1000);
+
+  // Grab the current month header text
+  const monthHeader = page.locator("text=/^[A-Za-z]+ \\d{4}$/").first();
+  const initialText = await monthHeader.innerText();
+
+  await page.waitForTimeout(1000);
+
+  // Click the "Next" button
+  await page.getByRole("button", { name: "Next" }).click();
+
+  await page.waitForTimeout(1000);
+
+  // Assert the month header text is now different
+  await expect(monthHeader).not.toHaveText(initialText);
+
+  console.log(`✓ Month changed from "${initialText}" to a different month`);
+});
